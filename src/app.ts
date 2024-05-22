@@ -1,19 +1,19 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
+import { productRoutes } from './app/modules/products/productRoutes';
+
 const app: Application = express();
-const port = 3000;
 
 app.use(express.json());
 app.use(cors());
+
+// Routes
+app.use('/api', productRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   const a = 10;
 
   res.send(a);
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
 });
 
 export default app;

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { orderValidationSchema } from './order.validation';
-import { Order } from './order.interface';
 import { orderServices } from './order.service';
 import { productServices } from '../products/product.service';
 import { ProductModel } from '../products/product.model';

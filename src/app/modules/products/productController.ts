@@ -29,7 +29,7 @@ const createNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-// Get all Products
+// Get all Products & Search Product
 const getAllProducts = async (req: Request, res: Response) => {
   try {
     const { searchTerm } = req.query;

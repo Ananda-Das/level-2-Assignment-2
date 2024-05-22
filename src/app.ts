@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { productRoutes } from './app/modules/products/productRoutes';
 import { orderRoutes } from './app/modules/order/orderRoutes';
@@ -12,14 +12,15 @@ app.use(cors());
 app.use('/api', productRoutes);
 app.use('/api', orderRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  const a = 10;
-
-  res.send(a);
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Assignment-2 server is running',
+  });
 });
 
 // Middleware for unmatched routes
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: 'Route not found',
@@ -27,7 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
   res.status(500).json({
     success: false,
     message: err.message || 'Something went wrong',

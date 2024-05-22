@@ -1,41 +1,41 @@
-# **Instruction**
+## Installation
 
-**Step - 1:** Create an `eslint.config.mjs` and copy the code from: 
-<br> 
-[Eslint File](https://github.com/ShafiaChy/Eslint-Config-Setup/blob/main/eslint.config.mjs)
-<br>
+1. **Clone the repository:**
+   git clone https://github.com/Ananda-Das/level-2-Assignment-2
 
-*Delete the files `eslintrc` and `.eslintignore`*
+2. **Install dependencies:**
+   cd product-management-api <br>
+   npm install
 
-**Step - 2:** Copy/paste the following lines and paste inside `script` in `package.json` code from given in the package.json
-```
+3. **Set up environment variables:**
+   Create a .env file in the root directory and define the following variables:
+   PORT=5000 <br>
+   MONGODB_URI=`<Your MongoDB connection URI>`
 
-    "lint": "npx eslint src --ignore-pattern .ts",
-    "lint:fix": "npx eslint src --fix",
-    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "prettier:fix": "npx prettier --write src",
+## Usage
 
-```
+### Product Endpoints
 
-<br>
+- **Create a New Product:** POST /api/products
 
-**Step - 3:** Install the `prettier` package
+- **Retrieve a List of All Products:** GET /api/products
 
-```
-    npm install --save-dev prettier
-```
+- **Retrieve a Specific Product by ID:** GET /api/products/:productId
 
-<br>
+- **Update Product Information:** PUT /api/products/:productId
 
-<br>
+- **Delete a Product:** DELETE /api/products/:productId
 
-*If prettier does not work*, follow step 4:
+- **Search a Product by Name, Category, or Description:** GET /api/products?searchTerm=<searchTerm>
 
-**Step - 4:** Add the code below to the `settings.json` file:
+### Order Endpoints
 
-```
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true,
-```
+- **Create a New Order:** POST /api/orders
 
-<br>
+- **Retrieve All Orders:** GET /api/orders
+
+- **Retrieve Orders by User Email:** GET /api/orders?email=<userEmail>
+
+## Live API URL
+
+You can access the live API at https://assignment-2-dun-nine.vercel.app/

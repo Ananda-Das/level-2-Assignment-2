@@ -3,6 +3,7 @@ import { productValidationSchema } from './productValidation';
 import { Product } from './product.interface';
 import { productServices } from './product.service';
 
+// Create Products
 const createNewProduct = async (req: Request, res: Response) => {
   try {
     const newProduct: Product = req.body;
@@ -25,6 +26,40 @@ const createNewProduct = async (req: Request, res: Response) => {
   }
 };
 
+// Get all Products
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const { searchTerm } = req.query;
+    const result = await productServices.getAllProductsFromDB(
+      searchTerm as string,
+    );
+    if (result?.length === 0) {
+      return res.json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+    searchTerm
+      ? res.status(200).json({
+          success: true,
+          message: `Products matching search term '${searchTerm}' fetched successfully!`,
+          data: result,
+        })
+      : res.status(200).json({
+          success: true,
+          message: 'Products fetched successfully!',
+          data: result,
+        });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
 export const ProductControllers = {
   createNewProduct,
+  getAllProducts,
 };

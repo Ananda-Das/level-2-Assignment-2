@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import { productValidationSchema } from './productValidation';
+import {
+  productValidationSchema,
+  updateProductValidationSchema,
+} from './productValidation';
 import { Product } from './product.interface';
 import { productServices } from './product.service';
 
@@ -71,7 +74,38 @@ const getSingleProduct = async (req: Request, res: Response) => {
     }
     res.status(200).json({
       success: true,
-      message: 'Product retrieved successfully!',
+      message: 'Product fetched successfully!',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const updateData = req.body;
+
+    updateProductValidationSchema.parse(updateData);
+
+    const result = await productServices.updateProductIntoDB(
+      productId,
+      updateData,
+    );
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
       data: result,
     });
   } catch (err: any) {
@@ -87,4 +121,6 @@ export const ProductControllers = {
   createNewProduct,
   getAllProducts,
   getSingleProduct,
+
+  updateProduct,
 };

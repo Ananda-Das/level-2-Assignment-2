@@ -12,19 +12,19 @@ const createNewOrder = async (
 ) => {
   try {
     const newOrder = req.body;
-    orderValidationSchema.parse(newOrder); //validate incoming data using zod
+    orderValidationSchema.parse(newOrder); // Validate incoming data using Zod
 
     const { productId, quantity: orderQuantity } = newOrder;
     const orderedProduct =
       await productServices.getSingleProductFromDB(productId);
 
-    //  check if ordered quantity excceeds available inventory quantity
+    // Check if ordered quantity exceeds available inventory quantity
     const availableQuantity = orderedProduct?.inventory.quantity;
     if (availableQuantity === 0) {
       await ProductModel.findByIdAndUpdate(productId, {
         $set: { 'inventory.inStock': false },
       });
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: 'Insufficient quantity available in inventory',
       });
@@ -34,7 +34,7 @@ const createNewOrder = async (
       availableQuantity &&
       orderQuantity > availableQuantity
     ) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: 'Insufficient quantity available in inventory',
       });
@@ -65,9 +65,16 @@ const getAllOrders = async (
     const { email } = req.query;
     const result = await orderServices.getAllOrdersFromDB(email as string);
 
+    if (!result || result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found',
+      });
+    }
+
     res.status(200).json({
       success: true,
-      message: 'Orders retrieved successfully!',
+      message: 'Orders fetched successfully for user email!',
       data: result,
     });
   } catch (error) {

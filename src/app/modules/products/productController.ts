@@ -23,7 +23,7 @@ const createNewProduct = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: err.message || 'Something went wrong',
       error: err,
     });
   }
@@ -37,7 +37,7 @@ const getAllProducts = async (req: Request, res: Response) => {
       searchTerm as string,
     );
     if (result?.length === 0) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: 'Product not found',
       });
@@ -56,7 +56,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: err.message || 'Something went wrong',
       error: err,
     });
   }
@@ -80,7 +80,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: err.message || 'Something went wrong',
       error: err,
     });
   }
@@ -111,7 +111,7 @@ const updateProduct = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: err.message || 'Something went wrong',
       error: err,
     });
   }
@@ -136,7 +136,7 @@ const deleteProduct = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: err.message || 'Something went wrong',
       error: err,
     });
   }
